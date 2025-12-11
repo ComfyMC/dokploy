@@ -32,8 +32,12 @@ export const createDomain = async (input: typeof apiCreateDomain._type) => {
 		}
 
 		if (domain.applicationId) {
-			const application = await findApplicationById(domain.applicationId);
-			await manageDomain(application, domain);
+		    const application = await findApplicationById(domain.applicationId);
+		    await manageDomain(application, domain);
+		} else if (domain.composeId) {
+		    // Handle Compose services
+		    const compose = await findComposeById(domain.composeId);
+		    await manageDomainForCompose(compose, domain);
 		}
 
 		return domain;
